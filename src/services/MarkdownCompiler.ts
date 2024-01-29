@@ -1,3 +1,5 @@
+import { textBetweenPrefix } from '@/helpers'
+
 class MarkdownCompiler {
   private text = '' as string
   public result = '' as string
@@ -21,8 +23,6 @@ class MarkdownCompiler {
     const [, hashPrefix, restOfText] = match
     const titleLvl = hashPrefix.length
 
-    console.log({ restOfText })
-
     const formattedText = `<h${titleLvl} className='h${titleLvl}'>${restOfText}</h${titleLvl}>`
     return formattedText
   }
@@ -33,56 +33,41 @@ class MarkdownCompiler {
     return `<p>${text}</p>`
   }
 
-  private toStrong(text: string) {
-    const match = text.match(/\*\*(.*?)\*\*/g)
-
-    if (!match) return text
-
-    match.forEach((m: string) => {
-      const formatted = m.replaceAll('**', '').trim()
-      text = text.replace(m, `<strong>${formatted}</strong>`)
-    })
-
-    return text
+  private toBold(text: string) {
+    return textBetweenPrefix(/\*\*(.*?)\*\*/g, '**', text, 'strong')
   }
 
   private toItalique(text: string) {
-    const match = text.match(/\*(.*?)\*/g)
-
-    if (!match) return text
-
-    match.forEach((m: string) => {
-      const formatted = m.replaceAll('*', '').trim()
-      text = text.replace(m, `<em>${formatted}</em>`)
-    })
-
-    return text
+    return textBetweenPrefix(/\*(.*?)\*/g, '*', text, 'em')
   }
 
   private toStrikethrough(text: string) {
-    const match = text.match(/~~(.*?)~~/g)
-
-    if (!match) return text
-
-    match.forEach((m: string) => {
-      const formatted = m.replaceAll('~~', '').trim()
-      text = text.replace(m, `<s>${formatted}</s>`)
-    })
-
-    return text
+    return textBetweenPrefix(/~~(.*?)~~/g, '~~', text, 's')
   }
 
   private toHighlighted(text: string) {
-    const match = text.match(/==(.*?)==/g)
+    return textBetweenPrefix(/==(.*?)==/g, '==', text, 'span', 'bg-yellow-200')
+  }
 
-    if (!match) return text
+  // private toBoldAndItalique(text: string) {
+  //   return textBetweenPrefix(
+  //     /===(.*?)===/g,
+  //     '===',
+  //     text,
+  //     'span',
+  //     'bg-yellow-200'
+  //   )
+  // }
 
-    match.forEach((m: string) => {
-      console.log('here')
-      const formatted = m.replaceAll('**', '').trim()
-      text = text.replace(m, `<span class='bg-yellow-200'>${formatted}</span>`)
-    })
-
+  private toQuote(text: string) {
+    // const reg = text.match(/^>(.*)/g)
+    return textBetweenPrefix(
+      /^>(.*)/g,
+      '>',
+      text,
+      'p',
+      'border border-l-2 border-l-gray-500 ps-4 ms-4 text-gray-500'
+    )
     return text
   }
 
@@ -92,16 +77,17 @@ class MarkdownCompiler {
     this.result = texts!
       .map((text: string) => {
         text = this.toTitle(text)
-        text = this.toStrong(text)
+        text = this.toBold(text)
         text = this.toItalique(text)
         text = this.toHighlighted(text)
-        text = this.toParagraphe(text)
         text = this.toStrikethrough(text)
+        // text = this.toBoldAndItalique(text)
+        text = this.toQuote(text)
+
+        text = this.toParagraphe(text)
         return text
       })
       .join('\n')
-
-    console.log(this.result)
 
     return this.result
   }
