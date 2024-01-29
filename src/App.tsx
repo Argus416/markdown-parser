@@ -1,7 +1,7 @@
+import { Textarea } from 'flowbite-react'
 import { useEffect, useState } from 'react'
-import { Label, Textarea } from 'flowbite-react'
-import MarkdownCompiler from './services/MarkdownCompiler'
 import { LOCALSTORAGE_KEYS } from './constants'
+import MarkdownCompiler from './services/MarkdownCompiler'
 
 function App() {
   const [input, setInput] = useState('')
