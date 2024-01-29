@@ -1,7 +1,7 @@
 - [x] Real-Time Preview
 - [] Synchronized Scrolling
 - [] User-Friendly Interface
-- [] Saves in Local Storage, so you don't lose your work.
+- [x] Saves in Local Storage, so you don't lose your work.
 - [] Extended Markdown Support:
   - [x] Headings (H1 - H6)
   - [x] Bold and Italic Text
