@@ -20,17 +20,49 @@ class MarkdownCompiler {
 
     const titleLvl = prefix.length
     console.log({ restOfText })
-    return `<h${titleLvl} className='h${titleLvl}'>${restOfText.join(
-      ' '
-    )}</h${titleLvl}>`
+
+    const formatText = restOfText.join(' ')
+    return `<h${titleLvl} className='h${titleLvl}'>${formatText}</h${titleLvl}>`
   }
 
+  private toStrong(text: string) {
+    const match = text.match(/\*\*(.*?)\*\*/g)
+
+    if (!match) return text
+
+    match.forEach((m: string) => {
+      const formatted = m.replaceAll('**', '').trim()
+      console.log({ formatted })
+      text = text.replace(m, `<strong>${formatted}</strong>`)
+    })
+
+    console.log({ text })
+    return text
+  }
+
+  private toItalique(text: string) {
+    const match = text.match(/\*(.*?)\*/g)
+
+    if (!match) return text
+
+    match.forEach((m: string) => {
+      const formatted = m.replaceAll('*', '').trim()
+      console.log({ formatted })
+      text = text.replace(m, `<em>${formatted}</em>`)
+    })
+
+    console.log({ text })
+    return text
+  }
   run() {
     const texts = this.toArrayList() as string[]
 
     this.result = texts!
       .map((text: string) => {
-        return this.toTitle(text)
+        text = this.toTitle(text)
+        text = this.toStrong(text)
+        text = this.toItalique(text)
+        return text
       })
       .join('\n')
 
