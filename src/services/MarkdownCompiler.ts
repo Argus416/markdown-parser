@@ -26,6 +26,13 @@ class MarkdownCompiler {
     const formattedText = `<h${titleLvl} className='h${titleLvl}'>${restOfText}</h${titleLvl}>`
     return formattedText
   }
+  private toParagraphe(text: string) {
+    const isBalised = text.indexOf('<') === 0
+    if (isBalised) return text
+
+    return `<p>${text}</p>`
+  }
+
   private toStrong(text: string) {
     const match = text.match(/\*\*(.*?)\*\*/g)
 
@@ -52,11 +59,17 @@ class MarkdownCompiler {
     return text
   }
 
-  private toParagraphe(text: string) {
-    const isBalised = text.indexOf('<') === 0
-    if (isBalised) return text
+  private toStrikethrough(text: string) {
+    const match = text.match(/~~(.*?)~~/g)
 
-    return `<p>${text}</p>`
+    if (!match) return text
+
+    match.forEach((m: string) => {
+      const formatted = m.replaceAll('~~', '').trim()
+      text = text.replace(m, `<s>${formatted}</s>`)
+    })
+
+    return text
   }
 
   private toHighlighted(text: string) {
@@ -83,6 +96,7 @@ class MarkdownCompiler {
         text = this.toItalique(text)
         text = this.toHighlighted(text)
         text = this.toParagraphe(text)
+        text = this.toStrikethrough(text)
         return text
       })
       .join('\n')
