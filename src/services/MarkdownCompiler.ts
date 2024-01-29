@@ -58,6 +58,21 @@ class MarkdownCompiler {
 
     return `<p>${text}</p>`
   }
+
+  private toHighlighted(text: string) {
+    const match = text.match(/==(.*?)==/g)
+
+    if (!match) return text
+
+    match.forEach((m: string) => {
+      console.log('here')
+      const formatted = m.replaceAll('**', '').trim()
+      text = text.replace(m, `<span class='bg-yellow-200'>${formatted}</span>`)
+    })
+
+    return text
+  }
+
   run() {
     const texts = this.toArrayList() as string[]
 
@@ -66,6 +81,7 @@ class MarkdownCompiler {
         text = this.toTitle(text)
         text = this.toStrong(text)
         text = this.toItalique(text)
+        text = this.toHighlighted(text)
         text = this.toParagraphe(text)
         return text
       })
