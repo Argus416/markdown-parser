@@ -72,6 +72,21 @@ class MarkdownCompiler {
   private toList(text: string) {
     return textBetweenPrefix(/^-(.*)/g, '-', text, 'li')
   }
+
+  private toCode(text: string) {
+    return textBetweenPrefix(/^``(.*)/g, '``', text, 'pre')
+  }
+
+  private toImage(text: string) {
+    const prefix = '!['
+    const match = text.match(/!\[([^\]]+)\]\(([^)]+)\)/)
+    if (!match) return text
+
+    const [, attribute, src] = match
+
+    console.log({ match })
+    return `<img alt=${attribute} src=${src} class="bg-white" />`
+  }
   run() {
     const texts = this.toArrayList() as string[]
 
@@ -85,6 +100,8 @@ class MarkdownCompiler {
         text = this.toBoldAndItalique(text)
         text = this.toQuote(text)
         text = this.toList(text)
+        text = this.toCode(text)
+        text = this.toImage(text)
 
         text = this.toParagraphe(text)
         return text
