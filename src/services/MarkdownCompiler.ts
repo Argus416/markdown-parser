@@ -49,18 +49,17 @@ class MarkdownCompiler {
     return textBetweenPrefix(/==(.*?)==/g, '==', text, 'span', 'bg-yellow-200')
   }
 
-  // private toBoldAndItalique(text: string) {
-  //   return textBetweenPrefix(
-  //     /===(.*?)===/g,
-  //     '===',
-  //     text,
-  //     'span',
-  //     'bg-yellow-200'
-  //   )
-  // }
+  private toBoldAndItalique(text: string) {
+    return textBetweenPrefix(
+      /===(.*?)===/g,
+      '===',
+      text,
+      'span',
+      'bg-yellow-200'
+    )
+  }
 
   private toQuote(text: string) {
-    // const reg = text.match(/^>(.*)/g)
     return textBetweenPrefix(
       /^>(.*)/g,
       '>',
@@ -68,9 +67,11 @@ class MarkdownCompiler {
       'p',
       'border border-l-2 border-l-gray-500 ps-4 ms-4 text-gray-500'
     )
-    return text
   }
 
+  private toList(text: string) {
+    return textBetweenPrefix(/^-(.*)/g, '-', text, 'li')
+  }
   run() {
     const texts = this.toArrayList() as string[]
 
@@ -81,8 +82,9 @@ class MarkdownCompiler {
         text = this.toItalique(text)
         text = this.toHighlighted(text)
         text = this.toStrikethrough(text)
-        // text = this.toBoldAndItalique(text)
+        text = this.toBoldAndItalique(text)
         text = this.toQuote(text)
+        text = this.toList(text)
 
         text = this.toParagraphe(text)
         return text
