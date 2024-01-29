@@ -8,7 +8,7 @@
   - [x] Strikethrough
   - [x] Blockquotes
   - [] Inline Code
-  - [] Horizontal Rules
-  - [] Highlighted Text
-  - [] Links and Images
-  - [] Unordered (Bullet) Lists
+  - [x] Horizontal Rules
+  - [x] Highlighted Text
+  - [x] Links and Images
+  - [x] Unordered (Bullet) Lists
