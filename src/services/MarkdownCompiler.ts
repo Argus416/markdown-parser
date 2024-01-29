@@ -33,7 +33,6 @@ class MarkdownCompiler {
 
     match.forEach((m: string) => {
       const formatted = m.replaceAll('**', '').trim()
-      console.log({ formatted })
       text = text.replace(m, `<strong>${formatted}</strong>`)
     })
 
@@ -47,11 +46,17 @@ class MarkdownCompiler {
 
     match.forEach((m: string) => {
       const formatted = m.replaceAll('*', '').trim()
-      console.log({ formatted })
       text = text.replace(m, `<em>${formatted}</em>`)
     })
 
     return text
+  }
+
+  private toParagraphe(text: string) {
+    const isBalised = text.indexOf('<') === 0
+    if (isBalised) return text
+
+    return `<p>${text}</p>`
   }
   run() {
     const texts = this.toArrayList() as string[]
@@ -61,9 +66,12 @@ class MarkdownCompiler {
         text = this.toTitle(text)
         text = this.toStrong(text)
         text = this.toItalique(text)
+        text = this.toParagraphe(text)
         return text
       })
       .join('\n')
+
+    console.log(this.result)
 
     return this.result
   }
