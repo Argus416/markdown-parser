@@ -78,7 +78,6 @@ class MarkdownCompiler {
   }
 
   private toImage(text: string) {
-    const prefix = '!['
     const match = text.match(/!\[([^\]]+)\]\(([^)]+)\)/)
     if (!match) return text
 
@@ -86,6 +85,16 @@ class MarkdownCompiler {
 
     console.log({ match })
     return `<img alt=${attribute} src=${src} class="bg-white" />`
+  }
+
+  private toLink(text: string) {
+    const match = text.match(/\[([^\]]+)\]\(([^)]+)\)/)
+    if (!match) return text
+
+    const [, content, href] = match
+
+    console.log({ match })
+    return `<a href=${href} class="bg-white" target="_blank">${content}</a>`
   }
   run() {
     const texts = this.toArrayList() as string[]
@@ -102,7 +111,7 @@ class MarkdownCompiler {
         text = this.toList(text)
         text = this.toCode(text)
         text = this.toImage(text)
-
+        text = this.toLink(text)
         text = this.toParagraphe(text)
         return text
       })
