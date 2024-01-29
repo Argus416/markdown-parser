@@ -12,13 +12,17 @@ class MarkdownCompiler {
   }
 
   private toTitle(text: string) {
-    const [prefix] = text.split(' ')
+    const [prefix, ...restOfText] = text.split(' ')
     const hashRegex = /^#+$/
     const isTitle = hashRegex.test(prefix)
+
     if (!isTitle) return text
 
     const titleLvl = prefix.length
-    return `<h${titleLvl} className='h${titleLvl}'>${text}</h${titleLvl}>`
+    console.log({ restOfText })
+    return `<h${titleLvl} className='h${titleLvl}'>${restOfText.join(
+      ' '
+    )}</h${titleLvl}>`
   }
 
   run() {
@@ -30,7 +34,7 @@ class MarkdownCompiler {
       })
       .join('\n')
 
-    console.log({ e: this.result })
+    // console.log({ e: this.result })
     return this.result
   }
 }
