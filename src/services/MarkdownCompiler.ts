@@ -12,19 +12,20 @@ class MarkdownCompiler {
   }
 
   private toTitle(text: string) {
-    const [prefix, ...restOfText] = text.split(' ')
-    const hashRegex = /^#+$/
-    const isTitle = hashRegex.test(prefix)
+    const match = text.match(/^(#+)\s+(.*)$/)
 
-    if (!isTitle) return text
+    if (!match) {
+      return text
+    }
 
-    const titleLvl = prefix.length
+    const [, hashPrefix, restOfText] = match
+    const titleLvl = hashPrefix.length
+
     console.log({ restOfText })
 
-    const formatText = restOfText.join(' ')
-    return `<h${titleLvl} className='h${titleLvl}'>${formatText}</h${titleLvl}>`
+    const formattedText = `<h${titleLvl} className='h${titleLvl}'>${restOfText}</h${titleLvl}>`
+    return formattedText
   }
-
   private toStrong(text: string) {
     const match = text.match(/\*\*(.*?)\*\*/g)
 
@@ -36,7 +37,6 @@ class MarkdownCompiler {
       text = text.replace(m, `<strong>${formatted}</strong>`)
     })
 
-    console.log({ text })
     return text
   }
 
@@ -51,7 +51,6 @@ class MarkdownCompiler {
       text = text.replace(m, `<em>${formatted}</em>`)
     })
 
-    console.log({ text })
     return text
   }
   run() {
@@ -66,7 +65,6 @@ class MarkdownCompiler {
       })
       .join('\n')
 
-    // console.log({ e: this.result })
     return this.result
   }
 }

@@ -11,22 +11,6 @@ class MarkdownCompiler {
     return this.text.split('\n')
   }
 
-  private toTitle(text: string) {
-    const match = text.match(/^(#+)\s+(.*)$/)
-
-    if (!match) {
-      return text
-    }
-
-    const [, hashPrefix, restOfText] = match
-    const titleLvl = hashPrefix.length
-
-    console.log({ restOfText })
-
-    const formattedText = `<h${titleLvl} className='h${titleLvl}'>${restOfText}</h${titleLvl}>`
-    return formattedText
-  }
-
   private toStrong(text: string) {}
   run() {
     const texts = this.toArrayList() as string[]
