@@ -34,48 +34,80 @@ class MarkdownCompiler {
   }
 
   private toBold(text: string) {
-    return textBetweenPrefix(/\*\*(.*?)\*\*/g, '**', text, 'strong')
+    // return textBetweenPrefix(/\*\*(.*?)\*\*/g, '**', text, 'strong')
+    return textBetweenPrefix({
+      regex: /\*\*(.*?)\*\*/g,
+      prefix: '**',
+      text,
+      baliseHtml: 'strong',
+    })
   }
 
   private toItalique(text: string) {
-    return textBetweenPrefix(/\*(.*?)\*/g, '*', text, 'em')
+    return textBetweenPrefix({
+      regex: /\*(.*?)\*/g,
+      prefix: '*',
+      text,
+      baliseHtml: 'em',
+    })
   }
 
   private toStrikethrough(text: string) {
-    return textBetweenPrefix(/~~(.*?)~~/g, '~~', text, 's')
+    return textBetweenPrefix({
+      regex: /~~(.*?)~~/g,
+      prefix: '~~',
+      text,
+      baliseHtml: 's',
+    })
   }
 
   private toHighlighted(text: string) {
-    return textBetweenPrefix(/==(.*?)==/g, '==', text, 'span', 'bg-yellow-200')
+    return textBetweenPrefix({
+      regex: /==(.*?)==/g,
+      prefix: '==',
+      text,
+      baliseHtml: 'span',
+      classHtml: 'bg-yellow-200',
+    })
   }
 
   private toBoldAndItalique(text: string) {
-    return textBetweenPrefix(
-      /===(.*?)===/g,
-      '===',
+    return textBetweenPrefix({
+      regex: /===(.*?)===/g,
+      prefix: '===',
       text,
-      'span',
-      'bg-yellow-200'
-    )
+      baliseHtml: 'span',
+    })
   }
 
   private toQuote(text: string) {
-    return textBetweenPrefix(
-      /^>(.*)/g,
-      '>',
+    return textBetweenPrefix({
+      regex: /^>(.*)/g,
+      prefix: '>',
       text,
-      'p',
-      'border border-l-2 border-l-gray-500 ps-4 ms-4 text-gray-500',
-      true
-    )
+      baliseHtml: 'p',
+      classHtml: 'border border-l-2 border-l-gray-500 ps-4 ms-4 text-gray-500',
+      uniqueReplace: true,
+    })
   }
 
   private toList(text: string) {
-    return textBetweenPrefix(/^-.*$/, '-', text, 'li', '', true)
+    return textBetweenPrefix({
+      regex: /^-.*$/,
+      prefix: '-',
+      text,
+      baliseHtml: 'li',
+      uniqueReplace: true,
+    })
   }
 
   private toCode(text: string) {
-    return textBetweenPrefix(/^``(.*)/g, '``', text, 'pre')
+    return textBetweenPrefix({
+      regex: /^``(.*)/g,
+      prefix: '``',
+      text,
+      baliseHtml: 'pre',
+    })
   }
 
   private toImage(text: string) {
