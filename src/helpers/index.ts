@@ -23,7 +23,7 @@ export function textBetweenPrefix({
     }
     text = text.replaceAll(
       m,
-      `<${baliseHtml} class="${classHtml}">${formatted}</${baliseHtml}>`
+      `<${baliseHtml} class="${classHtml ?? ''}">${formatted}</${baliseHtml}>`
     )
   })
 

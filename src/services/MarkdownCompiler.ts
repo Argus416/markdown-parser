@@ -26,6 +26,7 @@ class MarkdownCompiler {
     const formattedText = `<h${titleLvl} className='h${titleLvl}'>${restOfText}</h${titleLvl}>`
     return formattedText
   }
+
   private toParagraphe(text: string) {
     const isBalised = text.indexOf('<') === 0
     if (isBalised) return text
@@ -34,7 +35,6 @@ class MarkdownCompiler {
   }
 
   private toBold(text: string) {
-    // return textBetweenPrefix(/\*\*(.*?)\*\*/g, '**', text, 'strong')
     return textBetweenPrefix({
       regex: /\*\*(.*?)\*\*/g,
       prefix: '**',
@@ -82,7 +82,7 @@ class MarkdownCompiler {
 
   private toQuote(text: string) {
     return textBetweenPrefix({
-      regex: /^>(.*)/g,
+      regex: /^> (.*)+/g,
       prefix: '>',
       text,
       baliseHtml: 'p',
@@ -92,10 +92,19 @@ class MarkdownCompiler {
   }
 
   private toList(text: string) {
+    console.log({
+      textBetweenPrefix: textBetweenPrefix({
+        regex: /^- (.*)+/,
+        prefix: '-',
+        text: text,
+        baliseHtml: 'li',
+        uniqueReplace: true,
+      }),
+    })
     return textBetweenPrefix({
-      regex: /^-.*$/,
+      regex: /^- .*/,
       prefix: '-',
-      text,
+      text: text,
       baliseHtml: 'li',
       uniqueReplace: true,
     })
@@ -111,12 +120,13 @@ class MarkdownCompiler {
   }
 
   private toImage(text: string) {
-    const match = text.match(/!\[([^\]]+)\]\(([^)]+)\)/)
+    // /! \[([^\]]+) \] \( ([^)]+) \)/
+    const match = text.match(/^!\[([^\]]+)\]\(([^)]+)\)/)
     if (!match) return text
 
-    const [, attribute, src] = match
+    const [, t, src] = match
 
-    return `<img alt=${attribute} src=${src} class="bg-white" />`
+    return `<img alt=${t} src=${src} class="bg-white" />`
   }
 
   private toLink(text: string) {
