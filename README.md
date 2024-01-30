@@ -7,7 +7,6 @@
   - [x] Bold and Italic Text
   - [x] Strikethrough
   - [x] Blockquotes
-  - [] Inline Code
   - [x] Horizontal Rules
   - [x] Highlighted Text
   - [x] Links and Images
