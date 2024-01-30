@@ -65,12 +65,13 @@ class MarkdownCompiler {
       '>',
       text,
       'p',
-      'border border-l-2 border-l-gray-500 ps-4 ms-4 text-gray-500'
+      'border border-l-2 border-l-gray-500 ps-4 ms-4 text-gray-500',
+      true
     )
   }
 
   private toList(text: string) {
-    return textBetweenPrefix(/^-(.*)/g, '-', text, 'li')
+    return textBetweenPrefix(/^-.*$/, '-', text, 'li', '', true)
   }
 
   private toCode(text: string) {
@@ -83,7 +84,6 @@ class MarkdownCompiler {
 
     const [, attribute, src] = match
 
-    console.log({ match })
     return `<img alt=${attribute} src=${src} class="bg-white" />`
   }
 
@@ -93,9 +93,16 @@ class MarkdownCompiler {
 
     const [, content, href] = match
 
-    console.log({ match })
     return `<a href=${href} class="bg-white" target="_blank">${content}</a>`
   }
+
+  private toLine(text: string) {
+    const match = text.match(/^---$/g)
+    if (!match) return text
+
+    return `<div class="w-full h-0.5 my-4 bg-red-200"></div>`
+  }
+
   run() {
     const texts = this.toArrayList() as string[]
 
@@ -112,6 +119,7 @@ class MarkdownCompiler {
         text = this.toCode(text)
         text = this.toImage(text)
         text = this.toLink(text)
+        text = this.toLine(text)
         text = this.toParagraphe(text)
         return text
       })
