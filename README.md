@@ -1,13 +1,36 @@
-- [x] Real-Time Preview
-- [] Synchronized Scrolling
-- [] User-Friendly Interface
-- [x] Saves in Local Storage, so you don't lose your work.
-- [] Extended Markdown Support:
-  - [x] Headings (H1 - H6)
-  - [x] Bold and Italic Text
-  - [x] Strikethrough
-  - [x] Blockquotes
-  - [x] Horizontal Rules
-  - [x] Highlighted Text
-  - [x] Links and Images
-  - [x] Unordered (Bullet) Lists
+# Markdown Formatter
+
+## Features
+
+- **Real-Time Preview:** See your changes instantly as you type.
+- **Synchronized Scrolling:** Keep your editing and preview panes in sync.
+- **User-Friendly Interface:** Intuitive design for a seamless editing experience.
+- **Local Storage Saving:** Your work is automatically saved in local storage to prevent data loss.
+- **Extended Markdown Support:**
+  - Headings (H1 - H6)
+  - Bold and Italic Text
+  - Strikethrough
+  - Blockquotes
+  - Inline Code
+  - Horizontal Rules
+  - Highlighted Text
+  - Links and Images
+  - Unordered (Bullet) Lists
+
+## Project Preview
+
+![Project Preview](image.png)
+
+## Technologies
+
+- React
+- Tailwind
+
+## Getting Started
+
+To run the project, ensure you have npm version 18 or higher installed. Then, execute the following commands:
+
+```bash
+npm install
+npm run dev
+```
