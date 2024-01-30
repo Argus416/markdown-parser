@@ -46,7 +46,7 @@ function App() {
         <textarea
           value={input}
           id='comment'
-          placeholder='Start writing ...'
+          placeholder='Start typing ...'
           className=' border border-gray-200 py-4 px-4'
           rows={4}
           onChange={onTextChange}
