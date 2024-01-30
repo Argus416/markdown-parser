@@ -23,6 +23,44 @@ function App() {
   }, [])
 
   useEffect(() => {
+    console.log(
+      localStorage.getItem(LOCALSTORAGE_KEYS.markdown_text_input) === null
+    )
+    if (localStorage.getItem(LOCALSTORAGE_KEYS.markdown_text_input) !== null)
+      return
+
+    const template = `# Markdown Example
+
+## Title 1
+### Title 2
+#### Title 3
+##### Title 4
+###### Title 5
+
+---
+
+- List Element
+- Another List Element
+
+---
+
+Some ***inline*** ==styling== as you \`see\`
+
+---
+
+![This is a Photo](https://images.immediate.co.uk/production/volatile/sites/3/2023/03/Jujutsu-Kaisen-Cropped-dbe733b.jpg?quality=90&resize=844,563)
+
+---
+
+[Visit My GitHub Repo](https://github.com/Argus416)
+`
+    md.start(template)
+    const result = md.run()
+    localStorage.setItem(LOCALSTORAGE_KEYS.markdown_text_input, template)
+    localStorage.setItem(LOCALSTORAGE_KEYS.markdown_text_output, result)
+  }, [])
+
+  useEffect(() => {
     outputRef.current?.scroll({ top: textareaScrollTop })
   }, [textareaScrollTop])
 
