@@ -17,8 +17,8 @@ function App() {
       LOCALSTORAGE_KEYS.markdown_text_input
     ) as string
 
-    setInput(savedInput)
-    setOutput(savedText)
+    setInput(savedInput ?? '')
+    setOutput(savedText ?? '')
   }, [])
 
   useEffect(() => {
