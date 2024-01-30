@@ -41,7 +41,7 @@ function App() {
         flex flex-col items-center justify-center gap-8 h-screen 
         w-[900px] mx-auto
      '>
-      <h1 className='h1 text-center'>Markdown Formatter</h1>
+      <h1 className='h1 text-center'>Markdown Parser</h1>
       <div className='grid grid-cols-2 gap-2 h-[80vh] w-full'>
         <textarea
           value={input}

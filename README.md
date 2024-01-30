@@ -1,4 +1,8 @@
-# Markdown Formatter
+# Markdown Parser
+
+## Live Preview
+
+[Live preview](https://markdown-parser-jet.vercel.app/)
 
 ## Features
 
