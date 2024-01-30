@@ -3,10 +3,10 @@ import { textBetweenPrefix } from '@/helpers'
 class MarkdownCompiler {
   private text = '' as string
   public result = '' as string
-  constructor(text: string) {
-    this.text = text.trim()
-    this.run()
-    this.result
+  constructor() {}
+
+  start(text: string) {
+    this.text = text
   }
 
   private toArrayList() {

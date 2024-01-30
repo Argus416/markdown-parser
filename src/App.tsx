@@ -7,6 +7,7 @@ function App() {
   const [output, setOutput] = useState('')
   const [textareaScrollTop, setTextareaScrollTop] = useState(0)
   const outputRef = useRef<HTMLDivElement | null>(null)
+  const md = new MarkdownCompiler()
 
   useEffect(() => {
     const savedText = localStorage.getItem(
@@ -29,7 +30,7 @@ function App() {
     const { value } = e.target
     setInput(value)
 
-    const md = new MarkdownCompiler(value)
+    md.start(value)
     const result = md.run()
     localStorage.setItem(LOCALSTORAGE_KEYS.markdown_text_output, result)
     localStorage.setItem(LOCALSTORAGE_KEYS.markdown_text_input, value)
