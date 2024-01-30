@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { LOCALSTORAGE_KEYS } from './constants'
 import MarkdownCompiler from './services/MarkdownCompiler'
 
@@ -25,7 +25,7 @@ function App() {
     outputRef.current?.scroll({ top: textareaScrollTop })
   }, [textareaScrollTop])
 
-  const onTextChange = e => {
+  const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target
     setInput(value)
 

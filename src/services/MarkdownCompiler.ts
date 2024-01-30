@@ -137,11 +137,11 @@ class MarkdownCompiler {
     return `<div class="w-full h-0.5 my-6 bg-gray-200"></div>`
   }
 
-  private isEmpty(text: string) {
-    if (text.length) return text
+  // private isEmpty(text: string) {
+  //   if (text.length) return text
 
-    return '<br/>'
-  }
+  //   return '<br/>'
+  // }
 
   run() {
     const texts = this.toArrayList() as string[]
