@@ -1,4 +1,3 @@
-import { Textarea } from 'flowbite-react'
 import { useEffect, useRef, useState } from 'react'
 import { LOCALSTORAGE_KEYS } from './constants'
 import MarkdownCompiler from './services/MarkdownCompiler'
@@ -37,24 +36,27 @@ function App() {
     setOutput(result)
   }
   return (
-    <div className='w-screen overflow-hidden'>
-      <h1 className='mb-4 h1'>Markdown Formatter</h1>
-      <div className='grid grid-cols-2 gap-2 h-[80vh]'>
-        <Textarea
+    <div
+      className='
+        flex flex-col items-center justify-center gap-8 h-screen 
+        w-[900px] mx-auto
+     '>
+      <h1 className='h1 text-center'>Markdown Formatter</h1>
+      <div className='grid grid-cols-2 gap-2 h-[80vh] w-full'>
+        <textarea
           value={input}
           id='comment'
-          placeholder='Leave a comment...'
-          className='py-1.5 px-4'
+          placeholder='Start writing ...'
+          className=' border border-gray-200 py-4 px-4'
           rows={4}
           onChange={onTextChange}
           onScroll={e =>
             setTextareaScrollTop((e.target as HTMLTextAreaElement).scrollTop)
           }
         />
-
         <div
           ref={outputRef}
-          className='bg-gray-200 overflow-auto'
+          className=' border border-gray-200 py-4 px-4'
           dangerouslySetInnerHTML={{
             __html: output,
           }}

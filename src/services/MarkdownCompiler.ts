@@ -92,15 +92,6 @@ class MarkdownCompiler {
   }
 
   private toList(text: string) {
-    console.log({
-      textBetweenPrefix: textBetweenPrefix({
-        regex: /^- (.*)+/,
-        prefix: '-',
-        text: text,
-        baliseHtml: 'li',
-        uniqueReplace: true,
-      }),
-    })
     return textBetweenPrefix({
       regex: /^- .*/,
       prefix: '-',
@@ -112,10 +103,11 @@ class MarkdownCompiler {
 
   private toCode(text: string) {
     return textBetweenPrefix({
-      regex: /^``(.*)/g,
-      prefix: '``',
+      regex: /`(.*?)`/g,
+      prefix: '`',
       text,
-      baliseHtml: 'pre',
+      baliseHtml: 'code',
+      classHtml: 'bg-red-200 text-red-800',
     })
   }
 
@@ -135,14 +127,14 @@ class MarkdownCompiler {
 
     const [, content, href] = match
 
-    return `<a href=${href} class="bg-white" target="_blank">${content}</a>`
+    return `<a href=${href} class="link" target="_blank">${content}</a>`
   }
 
   private toLine(text: string) {
     const match = text.match(/^---$/g)
     if (!match) return text
 
-    return `<div class="w-full h-0.5 my-4 bg-red-200"></div>`
+    return `<div class="w-full h-0.5 my-6 bg-gray-200"></div>`
   }
 
   private isEmpty(text: string) {
@@ -168,7 +160,7 @@ class MarkdownCompiler {
         text = this.toImage(text)
         text = this.toLink(text)
         text = this.toLine(text)
-        text = this.isEmpty(text)
+        // text = this.isEmpty(text)
         text = this.toParagraphe(text)
         return text
       })
