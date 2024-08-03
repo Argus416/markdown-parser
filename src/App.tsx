@@ -3,31 +3,20 @@ import { LOCALSTORAGE_KEYS } from './constants'
 import MarkdownCompiler from './services/MarkdownCompiler'
 
 function App() {
-  const [input, setInput] = useState('')
-  const [output, setOutput] = useState('')
+  const [input, setInput] = useState(
+    localStorage.getItem(LOCALSTORAGE_KEYS.markdown_text_input) ?? ''
+  )
+  const [output, setOutput] = useState(
+    localStorage.getItem(LOCALSTORAGE_KEYS.markdown_text_output) ?? ''
+  )
   const [textareaScrollTop, setTextareaScrollTop] = useState(0)
   const outputRef = useRef<HTMLDivElement | null>(null)
   const md = new MarkdownCompiler()
 
   useEffect(() => {
-    const savedText = localStorage.getItem(
-      LOCALSTORAGE_KEYS.markdown_text_output
-    ) as string
-
-    const savedInput = localStorage.getItem(
+    const markdownStorage = localStorage.getItem(
       LOCALSTORAGE_KEYS.markdown_text_input
     ) as string
-
-    setInput(savedInput ?? '')
-    setOutput(savedText ?? '')
-  }, [])
-
-  useEffect(() => {
-    console.log(
-      localStorage.getItem(LOCALSTORAGE_KEYS.markdown_text_input) === null
-    )
-    if (localStorage.getItem(LOCALSTORAGE_KEYS.markdown_text_input) !== null)
-      return
 
     const template = `# Markdown Example
 
@@ -54,10 +43,15 @@ Some ***inline*** ==styling== as you \`see\`
 
 [Visit My GitHub Repo](https://github.com/Argus416)
 `
+
+    if (markdownStorage !== null && input !== template) return
+
     md.start(template)
     const result = md.run()
     localStorage.setItem(LOCALSTORAGE_KEYS.markdown_text_input, template)
     localStorage.setItem(LOCALSTORAGE_KEYS.markdown_text_output, result)
+    setInput(template)
+    setOutput(result)
   }, [])
 
   useEffect(() => {
